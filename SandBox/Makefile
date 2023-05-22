@@ -1,11 +1,11 @@
 CC = g++
-FLAGS =-Wall -Werror -Wextra -Wshadow -Wpedantic -ggdb \
-	-DGE_PLATFORM_WINDOWS \
-	-I"../GE/src"
+FLAGS =-Wall -Werror -Wextra -Wshadow -Wpedantic -ggdb -O3 \
+	-I"../GE/src" -I"../GE/vendor/spdlog/include/" \
+	-DGE_PLATFORM_WINDOWS
 LIBS =-L"../GE/src/GE" -lGE
 
 SandBox: SandBoxApp.o
-	$(CC) -o SandBox SandBoxApp.o $(LIBS)
+	$(CC) -o $@ $< $(FLAGS) $(LIBS)
 
-SandBoxApp.o: SandBoxApp.cpp
-	$(CC) -c SandBoxApp.cpp $(FLAGS)
+SandBoxApp.o: SandBoxApp.cpp ../GE/src/GE.h
+	$(CC) -c -o $@ $< $(FLAGS)
